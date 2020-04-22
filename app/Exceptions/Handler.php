@@ -4,9 +4,14 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Traits\RestTrait;
+use App\Traits\RestExceptionHandlerTrait;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class Handler extends ExceptionHandler
 {
+   use RestTrait;
+   use RestExceptionHandlerTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -44,8 +49,21 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
+
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if (!$this->isApiCall($request)) {
+            if ($exception instanceof MethodNotAllowedException) {
+
+                return abort(404);
+            }
+            if ($exception instanceof \InvalidArgumentException) {
+                return abort(404);
+            }
+            return parent::render($request, $exception);
+        }
+        return $this->getJsonResponseForException($request, $exception);
+
     }
+
 }

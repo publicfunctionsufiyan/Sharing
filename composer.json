@@ -9,17 +9,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "coderello/laravel-passport-social-grant": "^2.1",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/passport": "^8.0",
         "laravel/socialite": "^4.3",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "nesbot/carbon": "^2.27",
+        "spatie/laravel-medialibrary": "^7.0.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
+        "laravel/ui": "^1.1",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"
