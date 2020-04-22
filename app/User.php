@@ -2,31 +2,21 @@
 
 namespace App;
 
-use App\Notifications\resetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-
-
-
-
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use Notifiable;
-    use HasApiTokens, Notifiable;
-    use HasMediaTrait;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    public $with = ['media'];
     protected $fillable = [
-        'fname','lname', 'email', 'password'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -34,7 +24,9 @@ class User extends Authenticatable implements HasMedia
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     /**
      * The attributes that should be cast to native types.
@@ -44,16 +36,4 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function Files()
-    {
-        return $this->morphMany('App\File','privatable');
-    }
-
-
-public function sendPasswordResetNotification($token)
-{
-    $this->notify(new resetPasswordNotification($token));
-}
-
 }
